@@ -2,13 +2,16 @@
 #define FANCYLINEEDIT_H
 
 #include <QLineEdit>
+#include <QScopedPointer>
 
 class QLabel;
 class QGraphicsOpacityEffect;
+class FancyLineEditPrivate;
 
 class FancyLineEdit : public QLineEdit
 {
     Q_OBJECT
+    Q_DECLARE_PRIVATE(FancyLineEdit)
 
     Q_PROPERTY(ButtonMode buttonMode READ buttonMode WRITE setButtonMode)
     Q_PROPERTY(QPixmap buttonPixmap READ buttonPixmap WRITE setButtonPixmap)
@@ -17,6 +20,7 @@ class FancyLineEdit : public QLineEdit
 
 public:
     explicit FancyLineEdit(QWidget *parent = 0);
+    ~FancyLineEdit();
 
 public:
     /// @brief 设置按钮的显示模式，自己绘制和加载pixmap.
@@ -37,9 +41,6 @@ public:
     void setAutoHideButton(bool isAutoHide);
     bool isAutoHideButton() const;
 
-    /// @brief Under AutoHide mode, show/hide button with animation.
-    void animateShow(bool visible);
-
     /// @brief Set default text, the default is empty.
     void setDefaultText(const QString &text);
 
@@ -51,15 +52,7 @@ protected:
     virtual bool eventFilter(QObject *obj, QEvent *e);
 
 private:
-    bool m_bHovered;
-    QString m_defaultText;
-    QLabel *m_label;
-    QColor m_backgroundColor;
-    QColor m_buttonColor;
-    ButtonMode m_buttonMode;
-    QPixmap m_buttonPixmap;
-    bool m_isAutoHide;
-    QGraphicsOpacityEffect *m_opacityEffect;
+    QScopedPointer<FancyLineEditPrivate> d_ptr;
 };
 
 #endif // FANCYLINEEDIT_H
