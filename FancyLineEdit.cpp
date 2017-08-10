@@ -57,7 +57,7 @@ FancyLineEdit::FancyLineEdit(QWidget *parent)
     //m_label->setWindowOpacity(0.5);
     d->m_label->setAttribute(Qt::WA_Hover);
     d->m_label->setCursor(QCursor(Qt::PointingHandCursor));
-    d->m_label->setToolTip("Clear up to default value");
+    d->m_label->setToolTip(tr("Clear up to default value"));
 
     connect(this, &QLineEdit::textChanged, this, [=](){d->animateShow(!this->text().isEmpty());});
 
